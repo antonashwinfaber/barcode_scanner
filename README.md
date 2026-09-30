@@ -1,12 +1,11 @@
-# Barcode Scanner 📱⚡💻
-
-> Turn any smartphone into a wireless industrial barcode scanner that types directly into your active PC cursor (Excel, ERP, Notepad, inventory forms). **Zero mobile app installation required.**
+# Barcode Scanner
+> Turn any smartphone into a wireless industrial barcode scanner that types directly into your active PC cursor (Excel, ERP, Notepad, inventory forms). 
 
 ---
 
 ## Quick Start
 
-1. **Launch**: Run `MobileBarcodeScanner.exe` (or `run_live_wifi.bat`).
+1. **Launch**: Run `MobileBarcodeScanner.exe`
 2. **Pair**: Scan the on-screen QR code with your phone camera.
 3. **Scan**: Click into any text field on your PC and aim your phone at a barcode. It will beep, vibrate, and type the code instantly!
 
