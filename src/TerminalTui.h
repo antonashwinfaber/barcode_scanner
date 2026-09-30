@@ -87,7 +87,7 @@ public:
     }
 
     void Init() {
-        SetConsoleTitleA("John's Barcode");
+        SetConsoleTitleA("Barcode Scanner");
         AutoSizeConsole(102, 32);
 
         HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -293,17 +293,17 @@ public:
 
         // 2. Click on Top Tab Bar (Row 0)
         if (mouseY == 0) {
-            // [JOHN'S BARCODE] [1:Dashboard] [2:Logs] [3:Config] [4:Diagnostics]
-            if (mouseX >= 16 && mouseX <= 29) {
+            // [BARCODE SCANNER] [1:Dashboard] [2:Logs] [3:Config] [4:Diagnostics]
+            if (mouseX >= 17 && mouseX <= 29) {
                 SetTab(TuiTab::Dashboard);
                 return true;
-            } else if (mouseX >= 30 && mouseX <= 38) {
+            } else if (mouseX >= 30 && mouseX <= 37) {
                 SetTab(TuiTab::Logs);
                 return true;
-            } else if (mouseX >= 39 && mouseX <= 49) {
+            } else if (mouseX >= 38 && mouseX <= 47) {
                 SetTab(TuiTab::Config);
                 return true;
-            } else if (mouseX >= 50 && mouseX <= 66) {
+            } else if (mouseX >= 48 && mouseX <= 64) {
                 SetTab(TuiTab::Diagnostics);
                 return true;
             }
@@ -318,7 +318,7 @@ public:
         }
         if (mouseY == 26 || mouseY == 23 || mouseY >= screenRows - 2) {
             if (mouseX <= 21) {
-                // [JOHN'S] [1-4] Win -> cycle tab
+                // [SCANNER] [1-4] Win -> cycle tab
                 SetTab(static_cast<TuiTab>((static_cast<int>(m_currentTab) + 1) % 4));
                 return true;
             } else if (mouseX >= 22 && mouseX <= 36) {
@@ -461,7 +461,7 @@ private:
     }
 
     void RenderTabBar(std::ostringstream& out, int cols) {
-        out << "\033[44;37m JOHN'S BARCODE \033[0m";
+        out << "\033[44;37m BARCODE SCANNER \033[0m";
 
         auto tabBadge = [&](TuiTab tab, const std::string& label) {
             if (m_currentTab == tab) {
@@ -785,7 +785,7 @@ private:
     }
 
     void RenderBottomBar(std::ostringstream& out, int cols, int rows) {
-        out << "\033[42;30m [JOHN'S] \033[44;37m [1-4] Win \033[45;37m [H/T/U] Mode \033[46;30m [D] Debounce \033[43;30m [N] Rename \033[41;37m [K] Kick \033[47;30m [C] Clear \033[41;37m [Q] Quit \033[0m\033[K\n";
+        out << "\033[42;30m [SCANNER] \033[44;37m [1-4] Win \033[45;37m [H/T/U] Mode \033[46;30m [D] Debounce \033[43;30m [N] Rename \033[41;37m [K] Kick \033[47;30m [C] Clear \033[41;37m [Q] Quit \033[0m\033[K\n";
     }
 
     void CycleConfigValue(int dir) {

@@ -1,74 +1,59 @@
-# Mobile Barcode Scanner to PC Keystroke Wedge
+# Barcode Scanner 📱⚡💻
 
-Turn your mobile phone into an instant, wireless 1D/2D barcode and QR scanner for your PC. Scanned codes are automatically typed directly into whatever window your cursor is focused on (Excel, Notepad, ERP forms, web search, etc.).
-
-Powered by **ZXing-C++**, **Windows SendInput**, and a zero-install **HTML5 Mobile Client**.
+> Turn any smartphone into a wireless industrial barcode scanner that types directly into your active PC cursor (Excel, ERP, Notepad, inventory forms). **Zero mobile app installation required.**
 
 ---
 
-## Features
+## Quick Start
 
-- **Zero Phone Installation**: Works in standard mobile browsers (Safari, Chrome, Firefox). Just connect phone to Wi-Fi and scan the QR code.
-- **ZXing-C++ Decoding Engine**: Fast, robust decoding for all common formats:
-  - 1D: EAN-13, UPC-A, UPC-E, Code 128, Code 39, Code 93, Codabar, ITF
-  - 2D: QR Code, Data Matrix, Aztec, PDF417, MaxiCode
-- **Single-Device Exclusive Lock**:
-  - Dynamically generated 4-digit PIN prevents unauthorized access.
-  - Only **one** device can connect and scan at a time.
-  - If a second phone attempts to connect while one is active, it receives an immediate `Session In Use` rejection.
-  - Heartbeat tracking automatically releases the lock if the phone disconnects or tab is closed.
-- **Hardware-Grade Keyboard Wedge**:
-  - Injects keystrokes using Windows `SendInput` (`KEYEVENTF_UNICODE`) to avoid keyboard layout mismatches.
-  - Configured with automatic `ENTER` suffix.
-  - **Debounce / Cooldown**: Prevents duplicate rapid-fire typing when holding a barcode in view.
-- **Mobile Viewfinder**:
-  - Rear camera targeting with live scanning laser animation.
-  - Flashlight / Torch toggle button.
-  - Electronic audio "beep" and haptic vibration feedback on successful scans.
+1. **Launch**: Run `MobileBarcodeScanner.exe` (or `run_live_wifi.bat`).
+2. **Pair**: Scan the on-screen QR code with your phone camera.
+3. **Scan**: Click into any text field on your PC and aim your phone at a barcode. It will beep, vibrate, and type the code instantly!
 
 ---
 
-## Quick Start (Just Double-Click the .exe!)
+## Connection Modes
 
-1. **Launch the Application**:
-   - Double-click **`MobileBarcodeScanner.exe`** directly in the folder.
-   - It automatically starts all services (HTTP server, live video HTTPS proxy, and USB port forwarding) in a single application window — no batch files needed!
-
-2. **Connect from Your Phone**:
-   - Point your phone camera at the **QR Code** displayed in the terminal window (or navigate to `https://192.168.1.59:8443` on Wi-Fi, or `http://localhost:8080` on USB).
-   - On Wi-Fi HTTPS, tap **Advanced** -> **Proceed to 192.168.1.59 (unsafe)** to allow the secure camera context.
-
-3. **Start Live Scanning**:
-   - The phone's **live rear video camera** will turn on with the laser targeting reticle.
-   - Click into **Notepad**, **Excel**, or any input box on your PC.
-   - Hover your phone over any barcode — it will beep and type directly into your active cursor in real time!
+| Mode | Best For | Setup |
+| :--- | :--- | :--- |
+| **Wi-Fi HTTPS** *(Default)* | Same Wi-Fi / Local Office | Scan the Wi-Fi QR code. Accepts self-signed local cert. |
+| **Cloudflare Quick Tunnel** | Anywhere / Mobile Data | Zero configuration. Global SSL URL (`*.trycloudflare.com`). |
+| **USB Cable (ADB)** | Air-gapped / Maximum speed | Connect USB cable with USB Debugging enabled. |
+| **Plain HTTP LAN** | Internal enterprise intranets | Direct HTTP access without certificates. |
 
 ---
 
-## PC Terminal Controls
+## Core Features
 
-- `[U]` : **Setup / Refresh USB Mode** (runs `adb reverse` and displays USB QR code)
-- `[W]` : **Display Wi-Fi QR Code**
-- `[K]` : **Kick / Disconnect** the currently connected phone to free up the session slot
-- `[C]` : **Clear debounce cache** (allows re-scanning the same barcode immediately)
-- `[Q]` : **Quit** the application
+- **Zero-Install Web App**: Runs directly in Safari, Chrome, and Firefox via WebRTC.
+- **Freeze & Confirm**: Instantly freezes the detected frame with convenient thumb-zone **Continue** and **Cancel** buttons.
+- **Industrial Debounce Filter**: Prevents accidental repeat typing while holding the camera on an item (adjustable 0s to 5s cooldown).
+- **ZXing-C++ Engine**: Decodes 1D barcodes (Code 128, EAN, UPC, Code 39, ITF) and 2D codes (QR, Data Matrix, Aztec, PDF417).
+- **Hardware-Grade Wedge**: Types characters using native Windows `SendInput` Unicode events — immune to keyboard language mismatches.
+- **Camera Power Management**: Includes a dedicated **Camera Off / Standby** toggle to sleep the sensor, save battery, and prevent device heating.
+- **Single-Device Session Lock**: Dynamic 4-digit PIN ensures exclusive cursor control without accidental multi-user collisions.
 
 ---
 
-## Project Structure
+## Terminal Hotkeys & Mouse Controls
 
-```
-Barcode/
-├── CMakeLists.txt              # CMake build configuration with FetchContent for ZXing-C++
-├── run.bat                     # Quick launcher batch file
-├── build/
-│   └── MobileBarcodeScanner.exe # Self-contained compiled binary (5.2 MB)
-└── src/
-    ├── main.cpp                # App entry point, IP detection, ASCII QR code, console hotkeys
-    ├── SessionManager.h/.cpp   # Single-device PIN auth, session mutex, heartbeat timeout
-    ├── BarcodeDecoder.h/.cpp   # ZXing-C++ wrapper with stb_image in-memory decoding
-    ├── KeyboardWedge.h/.cpp    # Windows SendInput keystroke injection with debounce
-    ├── WebServer.h/.cpp        # Embedded HTTP server handling endpoints (/api/login, /api/scan)
-    ├── MobileUI.h              # Single-page mobile web app (HTML5 / WebRTC / AudioContext)
-    └── third_party/            # cpp-httplib, stb_image, and Nayuki's qrcodegen
+The terminal interface supports both keyboard hotkeys and direct mouse clicks:
+
+- **`[1-4]`**: Switch Windows (1: Dashboard, 2: Activity Logs, 3: Settings, 4: Diagnostics)
+- **`[H/T/U]`**: Cycle Connection Mode (Wi-Fi, Tunnel, USB, LAN)
+- **`[D]`**: Cycle Debounce Cooldown Filter (0s, 1.5s, 3.0s, 5.0s)
+- **`[N]`**: Rename PC Station display name
+- **`[K]`**: Kick / Disconnect active phone session
+- **`[C]`**: Clear debounce cache & reset history
+- **`[Q]`**: Quit application
+
+---
+
+## Building from Source
+
+Requirements: Windows 10/11, CMake 3.20+, MinGW or MSVC (C++20).
+
+```bash
+cmake -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release
 ```
