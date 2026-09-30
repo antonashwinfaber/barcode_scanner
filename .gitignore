@@ -1,0 +1,45 @@
+# Build Artifacts & CMake
+build/
+bin/
+out/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Compiled Binaries & Libraries
+*.exe
+*.dll
+*.so
+*.dylib
+*.obj
+*.o
+*.a
+*.lib
+MobileBarcodeScanner.exe
+cloudflared.exe
+
+# Vendored Compiler Toolchain
+compiler/
+
+# Machine-Specific / Runtime Configs & Logs
+device_name.txt
+*.log
+output.log
+
+# SSL Certificates & Private Keys
+*.pem
+*.key
+*.crt
+
+# IDE & Editor Files
+.vscode/
+.vs/
+.idea/
+*.user
+*.suo
+
+# OS Generated Files
+Thumbs.db
+[Dd]esktop.ini
+.DS_Store
